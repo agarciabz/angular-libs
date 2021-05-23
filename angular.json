@@ -1,0 +1,154 @@
+{
+  "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "forms-demo",
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "projects": {
+    "forms-demo": {
+      "projectType": "application",
+      "root": "apps/forms-demo",
+      "sourceRoot": "apps/forms-demo/src",
+      "prefix": "angular-libs",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/forms-demo",
+            "index": "apps/forms-demo/src/index.html",
+            "main": "apps/forms-demo/src/main.ts",
+            "polyfills": "apps/forms-demo/src/polyfills.ts",
+            "tsConfig": "apps/forms-demo/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/forms-demo/src/favicon.ico",
+              "apps/forms-demo/src/assets"
+            ],
+            "styles": ["apps/forms-demo/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/forms-demo/src/environments/environment.ts",
+                  "with": "apps/forms-demo/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "forms-demo:build:production"
+            },
+            "development": {
+              "browserTarget": "forms-demo:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "forms-demo:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/forms-demo/src/**/*.ts",
+              "apps/forms-demo/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/forms-demo"],
+          "options": {
+            "jestConfig": "apps/forms-demo/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "forms-demo-e2e": {
+      "root": "apps/forms-demo-e2e",
+      "sourceRoot": "apps/forms-demo-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/forms-demo-e2e/cypress.json",
+            "tsConfig": "apps/forms-demo-e2e/tsconfig.e2e.json",
+            "devServerTarget": "forms-demo:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "forms-demo:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/forms-demo-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  }
+}
