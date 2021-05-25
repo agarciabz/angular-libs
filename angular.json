@@ -149,6 +149,46 @@
           }
         }
       }
+    },
+    "utils-validators": {
+      "projectType": "library",
+      "root": "libs/utils/validators",
+      "sourceRoot": "libs/utils/validators/src",
+      "prefix": "angular-libs",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "project": "libs/utils/validators/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/utils/validators/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/utils/validators/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/utils/validators"],
+          "options": {
+            "jestConfig": "libs/utils/validators/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/utils/validators/src/**/*.ts",
+              "libs/utils/validators/src/**/*.html"
+            ]
+          }
+        }
+      }
     }
   }
 }

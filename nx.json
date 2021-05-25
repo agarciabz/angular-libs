@@ -25,6 +25,9 @@
     "forms-demo-e2e": {
       "tags": [],
       "implicitDependencies": ["forms-demo"]
+    },
+    "utils-validators": {
+      "tags": []
     }
   }
 }
