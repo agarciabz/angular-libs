@@ -1,1 +1,1 @@
-export * from './lib/utils/validators.module';
+export * from './lib/validators';
